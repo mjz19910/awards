@@ -134,9 +134,9 @@ function awards.unlock(name, award, goal)
 		for i = 1, #awdef.prizes do
 			local itemstack = ItemStack(awdef.prizes[i])
 			if not itemstack:is_empty() then
-				local receiverref = minetest.get_player_by_name(name)
-				if receiverref then
-					receiverref:get_inventory():add_item("main", itemstack)
+				local player = minetest.get_player_by_name(name)
+				if player then
+					player:get_inventory():add_item("main", itemstack)
 				end
 			end
 		end
@@ -334,8 +334,8 @@ function awards.get_award_states(name)
 							local progress = goal.get_progress and goal:get_progress(data) or { current = data.unlocked[goal.id] and 1 or 0, target = 1 }
 							total_progress.current = total_progress.current + progress.current
 							total_progress.target = total_progress.target + progress.target
-							local perc = progress.current / progress.target
-							if perc > 0 then
+							local percent = progress.current / progress.target
+							if percent > 0 then
 								started = true
 							end
 							table.insert(goals,{
